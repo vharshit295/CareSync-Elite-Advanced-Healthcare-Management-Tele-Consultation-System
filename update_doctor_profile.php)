@@ -1,0 +1,17 @@
+<?php
+session_start();
+include 'db.php';
+if(isset($_POST['update_onboarding'])){
+    $doc_id = $_SESSION['user_id'];
+    $license = mysqli_real_escape_string($conn, $_POST['license_no']);
+    $spec = mysqli_real_escape_string($conn, $_POST['specialization']);
+    $addr = mysqli_real_escape_string($conn, $_POST['clinic_address']);
+    $days = mysqli_real_escape_string($conn, $_POST['available_days']);
+    $time = mysqli_real_escape_string($conn, $_POST['available_time']);
+
+    $sql = "UPDATE users SET license_no='$license', specialization='$spec', clinic_address='$addr', available_days='$days', available_time='$time' WHERE id='$doc_id'";
+    if(mysqli_query($conn, $sql)){
+        echo "<script>alert('Details Submitted! Admin will verify soon.'); window.location='doctor_dashboard.php';</script>";
+    }
+}
+?>
